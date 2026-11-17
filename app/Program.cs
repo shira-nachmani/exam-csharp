@@ -17,11 +17,11 @@ class Program
         int reportDay = ReadReportDay(lines);
         List<string[]> rows = ReadRows(lines);
         Console.Error.WriteLine("skeleton ok: read " + Path.GetFileName(path) + " - report day " + reportDay + " - " + rows.Count + " rows");
-
+        
         // Write your code here. 'reportDay' and 'rows' are ready.
     }
 
-    static int ReadReportDay(string[] lines)
+     static int ReadReportDay(string[] lines)
     {
         return int.Parse(lines[0].Split(':')[1].Trim());
     }
@@ -52,4 +52,7 @@ class Program
         }
         return Path.Combine("data", "sample.txt");
     }
+
+
+
 }
