@@ -8,6 +8,7 @@ namespace App
     {
         student,
         teacher,
-        guest
+        guest,
+        alumna
     }
 }

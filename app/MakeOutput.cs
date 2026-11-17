@@ -39,7 +39,7 @@ namespace App
             int days = endDay - loanDay;
             if (days <= 14)
                 return 0;
-            return Math.Min(30, days - 14);
+            return Math.Min(40, days - 14);
         }
 
         public int FineForGuest(string[] guest)
@@ -50,6 +50,18 @@ namespace App
                 : int.Parse(guest[5]);
             int days = endDay - loanDay;
             return (int)Math.Ceiling(days * 2.5);
+        }
+
+        public int FineForAlumna(string[] alumna)
+        {
+            int loanDay = int.Parse(alumna[4]);
+            int endDay = string.IsNullOrWhiteSpace(alumna[5])
+                ? ReportDay
+                : int.Parse(alumna[5]);
+            int days = endDay - loanDay;
+            if (days <= 10)
+                return 0;
+            return Math.Min(25, (int)Math.Ceiling((days - 10) * 1.5));
         }
 
         public bool IsOkLone(string[] line)
@@ -118,9 +130,12 @@ namespace App
                     continue;
                 }
 
-                int fine = type == EnumType.guest
-                    ? FineForGuest(row)
-                    : FineForStudent(row);
+                int fine = type switch
+                {
+                    EnumType.guest => FineForGuest(row),
+                    EnumType.alumna => FineForAlumna(row),
+                    _ => FineForStudent(row)
+                };
 
                 if (fine > 0)
                 {
