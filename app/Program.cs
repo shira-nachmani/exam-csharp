@@ -17,8 +17,33 @@ class Program
         int reportDay = ReadReportDay(lines);
         List<string[]> rows = ReadRows(lines);
         Console.Error.WriteLine("skeleton ok: read " + Path.GetFileName(path) + " - report day " + reportDay + " - " + rows.Count + " rows");
-        
-        // Write your code here. 'reportDay' and 'rows' are ready.
+
+        App.MakeOutput output = new App.MakeOutput(reportDay, rows);
+        output.ClassifyRows();
+
+        Console.WriteLine("FINES");
+        foreach (string fine in output.Fines)
+            Console.WriteLine(fine);
+
+        Console.WriteLine("FLAGGED");
+        foreach (string flagged in output.Flagged)
+            Console.WriteLine(flagged);
+
+        Console.WriteLine("ERRORS");
+        foreach (string error in output.Error)
+            Console.WriteLine(error);
+
+        Console.WriteLine($"TOTAL,{output.TotalFine}");
+
+        Console.WriteLine("TOP_BOOKS");
+        Console.WriteLine("book,count");
+        foreach (string book in output.TopBooks)
+            Console.WriteLine(book);
+
+        Console.WriteLine("AT_RISK");
+        Console.WriteLine("reader_id,name");
+        foreach (string reader in output.AtRisk)
+            Console.WriteLine(reader);
     }
 
      static int ReadReportDay(string[] lines)
